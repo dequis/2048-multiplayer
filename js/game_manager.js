@@ -90,7 +90,7 @@ GameManager.prototype.addRandomTile = function (cb) {
 // Sends the updated grid to the actuator
 GameManager.prototype.actuate = function () {
   var self = this;
-  var didWeWin = this.movesAvailable() && (this.won || ((window._io.player[this.options.player] > window._io.player[this.otherPlayer]) && (this.over || window._io.gameOver)));
+  var didWeWin = this.movesAvailable() && (this.won || ((window._io.player[this.options.player] > window._io.player[this.options.otherPlayer]) && (this.over || window._io.gameOver)));
   var isItOver = (this.over || window._io.gameOver);
   window._io.addListener(function (msg) {
     if (!(msg.player === self.options.otherPlayer && msg.gameEnd)) return;
@@ -187,7 +187,7 @@ GameManager.prototype.move = function (direction) {
     this.addRandomTile(function () {
       if (!self.movesAvailable() || window._io.gameOver) {
         self.over = true; // Game over!
-        self.won = window._io.player[self.options.player] > window._io.player[(self.otherPlayer)];
+        self.won = window._io.player[self.options.player] > window._io.player[(self.options.otherPlayer)];
       }
 
       self.actuate();
